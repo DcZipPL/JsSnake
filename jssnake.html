@@ -10,21 +10,31 @@
         body section{
             border: red 1px dashed;
         }
+        body section input{
+            border: red 1px dotted;
+            background: #0000;
+            position: absolute;
+            left: 0;
+            height: 200px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
 <section>
     <canvas id="c" width="200" height="200"></canvas>
+    <input id="ei">
 </section>
 <script>
     const gridSize = 20;
     const cellSize = 10;
 
     class Grid {
+        static currentPosX = 10;
+        static currentPosY = 10;
+
         canvas;
         ctx;
-        currentPosX;
-        currentPosY;
 
         constructor(id, size) {
             this.canvas = document.getElementById(id);
@@ -48,9 +58,27 @@
             this.ctx.rect(cellX*cellSize, cellY*cellSize, cellSize, cellSize);
             this.ctx.fill();
         }
+
+        createEventHandler(){
+            document.getElementById("ei").onkeydown = function (evt) {
+                if (evt.code==="ArrowUp"){
+                    grid.setObjAt(Grid.currentPosX,--Grid.currentPosY);
+                }
+                if (evt.code==="ArrowLeft"){
+                    grid.setObjAt(--Grid.currentPosX,Grid.currentPosY);
+                }
+                if (evt.code==="ArrowRight"){
+                    grid.setObjAt(++Grid.currentPosX,Grid.currentPosY);
+                }
+                if (evt.code==="ArrowDown"){
+                    grid.setObjAt(Grid.currentPosX,++Grid.currentPosY);
+                }
+            };
+        }
     }
 
     let grid = new Grid("c",gridSize*cellSize);
+    grid.createEventHandler()
     grid.setObjAt(2,3);
     grid.setObjAt(2,4);
     grid.setObjAt(2,5);
