@@ -4,3 +4,7 @@ class Direction {
     static RIGHT = "ArrowRight";
     static DOWN = "ArrowDown";
 }
+
+// C++ macros
+const X = 0;
+const Y = 1;

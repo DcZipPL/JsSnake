@@ -1,9 +1,7 @@
 import(Direction);
 
 class Grid {
-    currentPosX = 10;
-    currentPosY = 10;
-    previousKey = Direction.UP;
+    previousKey = "unknown";
 
     canvas;
     ctx;
