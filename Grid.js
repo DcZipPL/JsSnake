@@ -37,23 +37,7 @@ class Grid {
     // Handle player input
     createEventHandler(){
         document.getElementById("ei").onkeydown = function (evt) {
-            if (evt.code===Direction.UP){
-                grid.previousKey = Direction.UP;
-                grid.setObjAt("lime", grid.currentPosX,grid.currentPosY--);
-                grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
-            }
-            if (evt.code===Direction.LEFT){
-                grid.setObjAt("lime", grid.currentPosX--,grid.currentPosY);
-                grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
-            }
-            if (evt.code===Direction.RIGHT){
-                grid.setObjAt("lime", grid.currentPosX++,grid.currentPosY);
-                grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
-            }
-            if (evt.code===Direction.DOWN){
-                grid.setObjAt("lime", grid.currentPosX,grid.currentPosY++);
-                grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
-            }
+            grid.previousKey = evt.code;
         };
     }
 }

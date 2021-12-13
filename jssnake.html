@@ -8,6 +8,7 @@
 
     <script src="Direction.js"></script>
     <script src="Grid.js"></script>
+    <script src="Snake.js"></script>
     <style>
         *{margin: 0}
         body section{
@@ -31,15 +32,35 @@
 <script>
     const gridSize = 20;
     const cellSize = 10;
+    const speed = 100;
+    const length = 4;
 
     let grid = new Grid("c",gridSize*cellSize);
-    grid.createEventHandler()
-    grid.setObjAt(2,3);
-    grid.setObjAt(2,4);
-    grid.setObjAt(2,5);
-    grid.setObjAt(3,5);
+    let snake = new Snake(length);
+    grid.createEventHandler();
 
-    grid.removeObjAt(2,4);
+    setInterval(function() {
+        if (grid.previousKey===Direction.UP && snake.alive){
+            grid.setObjAt("lime", grid.currentPosX,grid.currentPosY--);
+            grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
+        }
+        else if (grid.previousKey===Direction.LEFT && snake.alive){
+            grid.setObjAt("lime", grid.currentPosX--,grid.currentPosY);
+            grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
+        }
+        else if (grid.previousKey===Direction.RIGHT && snake.alive){
+            grid.setObjAt("lime", grid.currentPosX++,grid.currentPosY);
+            grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
+        }
+        else if (grid.previousKey===Direction.DOWN && snake.alive){
+            grid.setObjAt("lime", grid.currentPosX,grid.currentPosY++);
+            grid.setObjAt("red", grid.currentPosX,grid.currentPosY);
+        }
+
+        if (grid.currentPosX > gridSize){
+            snake.alive = false;
+        }
+    }, speed);
 </script>
 </body>
 </html>
