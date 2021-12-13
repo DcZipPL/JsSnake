@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Snake</title>
+    <style>
+        *{margin: 0}
+        body section{
+            border: red 1px dashed;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <canvas id="c" width="200" height="200"></canvas>
+</section>
+<script>
+    const gridSize = 20;
+    const cellSize = 10;
+
+    class Grid {
+        canvas;
+        ctx;
+        currentPosX;
+        currentPosY;
+
+        constructor(id, size) {
+            this.canvas = document.getElementById(id);
+            this.ctx = this.canvas.getContext("2d");
+            this.ctx.beginPath();
+            this.ctx.fillStyle = "black";
+            this.ctx.rect(0, 0, size, size);
+            this.ctx.fill();
+        }
+
+        setObjAt(cellX, cellY){
+            this.ctx.beginPath();
+            this.ctx.fillStyle = "lime";
+            this.ctx.arc(cellX*cellSize+(cellSize/2), cellY*cellSize+(cellSize/2), cellSize/2, 0, 2 * Math.PI, false);
+            this.ctx.fill();
+        }
+
+        removeObjAt(cellX, cellY){
+            this.ctx.beginPath();
+            this.ctx.fillStyle = "black";
+            this.ctx.rect(cellX*cellSize, cellY*cellSize, cellSize, cellSize);
+            this.ctx.fill();
+        }
+    }
+
+    let grid = new Grid("c",gridSize*cellSize);
+    grid.setObjAt(2,3);
+    grid.setObjAt(2,4);
+    grid.setObjAt(2,5);
+    grid.setObjAt(3,5);
+
+    grid.removeObjAt(2,4);
+</script>
+</body>
+</html>
