@@ -1,7 +1,13 @@
 import(Direction);
 
+// use lambda to create essential Random in range
+const Random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
 class Grid {
     previousKey = "unknown";
+
+    applePosX = 0;
+    applePosY = 0;
 
     canvas;
     ctx;
@@ -37,5 +43,11 @@ class Grid {
         document.getElementById("ei").onkeydown = function (evt) {
             grid.previousKey = evt.code;
         };
+    }
+
+    spawnApple() {
+        this.applePosX = Random(0,20);
+        this.applePosY = Random(0,20);
+        this.setObjAt("yellow",this.applePosX,this.applePosY);
     }
 }
