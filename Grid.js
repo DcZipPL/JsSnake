@@ -40,9 +40,7 @@ class Grid {
 
     // Handle player input
     createEventHandler(){
-        document.getElementById("ei").onkeydown = function (evt) {
-            grid.previousKey = evt.code;
-        };
+        window.addEventListener("keydown",evt => {grid.previousKey = evt.code});
     }
 
     spawnApple() {

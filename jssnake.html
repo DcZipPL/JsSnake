@@ -29,6 +29,7 @@
 <section>
     <canvas id="c" width="200" height="200"></canvas>
     <input type="text" id="ei">
+    <p style="display: none;" id="goText">You died</p>
 </section>
 <script>
     const gridSize = 20;
@@ -42,11 +43,13 @@
     grid.spawnApple();
 
     setInterval(function() {
+        // Splice the array to keep it short
         if (snake.previousPos[X].length + snake.previousPos[Y].length > snake.length + snake.length){
             snake.previousPos[X].splice(-1);
             snake.previousPos[Y].splice(-1);
         }
 
+        // Interact with user input
         if (grid.previousKey===Direction.UP && snake.alive){
             snake.savePosition();
             grid.setObjAt("lime", snake.currentPosX,snake.currentPosY--);
@@ -68,29 +71,15 @@
             grid.setObjAt("red", snake.currentPosX,snake.currentPosY);
         }
 
-        if (snake.currentPosX >= gridSize){
-            snake.alive = false;
-        }
+        // Kill snake if it touches himself
+        snake.checkCollision(grid);
 
-        if (snake.currentPosX === grid.applePosX && snake.currentPosY === grid.applePosY){
-            grid.spawnApple();
-            snake.length++;
-        }
+        // Clear areas that ware snake is no more
+        grid.removeObjAt(snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length]);
+        grid.setObjAt("#282828", snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length])
 
         // Update apple circle when player is already in apple
         grid.setObjAt("yellow",this.applePosX,this.applePosY);
-
-        console.log(snake.previousPos[X]+":"+snake.previousPos[Y]);
-
-        // Kill snake if it touches himself
-        for (let i = 1; i <= snake.previousPos[X].length; i++) {
-            if (snake.currentPosX === snake.previousPos[X][i] && snake.currentPosY === snake.previousPos[Y][i]){
-                snake.alive = false;
-            }
-        }
-
-        grid.removeObjAt(snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length]);
-        grid.setObjAt("#282828", snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length])
     }, speed);
 
 </script>
