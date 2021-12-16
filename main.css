@@ -1,0 +1,13 @@
+*{margin: 0}
+body section{
+    border: red 1px dashed;
+}
+body section input{
+    border: red 1px dotted;
+    background: #0000;
+    color: #0000;
+    position: absolute;
+    left: 0;
+    height: 200px;
+    width: 200px;
+}
