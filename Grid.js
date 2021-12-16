@@ -40,7 +40,10 @@ class Grid {
 
     // Handle player input
     createEventHandler(){
-        window.addEventListener("keydown",evt => {grid.previousKey = evt.code});
+        window.addEventListener("keydown",evt => {
+            if (Direction.getOpposite(evt.code) !== grid.previousKey)
+                grid.previousKey = evt.code;
+        });
     }
 
     spawnApple() {
