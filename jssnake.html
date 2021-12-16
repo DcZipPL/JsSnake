@@ -17,6 +17,7 @@
         body section input{
             border: red 1px dotted;
             background: #0000;
+            color: #0000;
             position: absolute;
             left: 0;
             height: 200px;
@@ -27,46 +28,59 @@
 <body>
 <section>
     <canvas id="c" width="200" height="200"></canvas>
-    <input id="ei">
+    <p style="display: none;" id="goText">You died</p>
 </section>
 <script>
     const gridSize = 20;
     const cellSize = 10;
     const speed = 50;
-    const length = 3;
+    const length = 6;
 
     let grid = new Grid("c",gridSize*cellSize);
     let snake = new Snake(length);
     grid.createEventHandler();
+    grid.spawnApple();
 
     setInterval(function() {
+        // Splice the array to keep it short
+        if (snake.previousPos[X].length + snake.previousPos[Y].length > snake.length + snake.length){
+            snake.previousPos[X].splice(-1);
+            snake.previousPos[Y].splice(-1);
+        }
+
+        // Interact with user input
         if (grid.previousKey===Direction.UP && snake.alive){
+            snake.savePosition();
             grid.setObjAt("lime", snake.currentPosX,snake.currentPosY--);
             grid.setObjAt("red", snake.currentPosX,snake.currentPosY);
-            snake.savePosition();
         }
         else if (grid.previousKey===Direction.LEFT && snake.alive){
+            snake.savePosition();
             grid.setObjAt("lime", snake.currentPosX--,snake.currentPosY);
             grid.setObjAt("red", snake.currentPosX,snake.currentPosY);
-            snake.savePosition();
         }
         else if (grid.previousKey===Direction.RIGHT && snake.alive){
+            snake.savePosition();
             grid.setObjAt("lime", snake.currentPosX++,snake.currentPosY);
             grid.setObjAt("red", snake.currentPosX,snake.currentPosY);
-            snake.savePosition();
         }
         else if (grid.previousKey===Direction.DOWN && snake.alive){
+            snake.savePosition();
             grid.setObjAt("lime", snake.currentPosX,snake.currentPosY++);
             grid.setObjAt("red", snake.currentPosX,snake.currentPosY);
-            snake.savePosition();
         }
 
-        if (snake.currentPosX >= gridSize){
-            snake.alive = false;
-        }
+        // Kill snake if it touches himself
+        snake.checkCollision(grid);
 
+        // Clear areas that ware snake is no more
         grid.removeObjAt(snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length]);
+        grid.setObjAt("#282828", snake.previousPos[X][snake.length],snake.previousPos[Y][snake.length])
+
+        // Update apple circle when player is already in apple
+        grid.setObjAt("yellow",this.applePosX,this.applePosY);
     }, speed);
+
 </script>
 </body>
 </html>
