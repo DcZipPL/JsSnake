@@ -48,4 +48,44 @@ class Snake{
         this.alive = false;
         document.getElementById("goText").style="";
     }
+
+    tick(grid) {
+        // Splice the array to keep it short
+        if (this.previousPos[X].length + this.previousPos[Y].length > this.length + this.length){
+            this.previousPos[X].splice(-1);
+            this.previousPos[Y].splice(-1);
+        }
+
+        // Interact with user input
+        if (grid.previousKey===Direction.UP && this.alive){
+            this.savePosition();
+            grid.setObjAt("lime", this.currentPosX,this.currentPosY--);
+            grid.setObjAt("red", this.currentPosX,this.currentPosY);
+        }
+        else if (grid.previousKey===Direction.LEFT && this.alive){
+            this.savePosition();
+            grid.setObjAt("lime", this.currentPosX--,this.currentPosY);
+            grid.setObjAt("red", this.currentPosX,this.currentPosY);
+        }
+        else if (grid.previousKey===Direction.RIGHT && this.alive){
+            this.savePosition();
+            grid.setObjAt("lime", this.currentPosX++,this.currentPosY);
+            grid.setObjAt("red", this.currentPosX,this.currentPosY);
+        }
+        else if (grid.previousKey===Direction.DOWN && this.alive){
+            this.savePosition();
+            grid.setObjAt("lime", this.currentPosX,this.currentPosY++);
+            grid.setObjAt("red", this.currentPosX,this.currentPosY);
+        }
+
+        // Kill snake if it touches himself
+        this.checkCollision(grid);
+
+        // Clear areas that ware this is no more
+        grid.removeObjAt(this.previousPos[X][this.length],this.previousPos[Y][this.length]);
+        grid.setObjAt("#282828", this.previousPos[X][this.length],this.previousPos[Y][this.length])
+
+        // Update apple circle when player is already in apple
+        grid.setObjAt("yellow",grid.applePosX,grid.applePosY);
+    }
 }

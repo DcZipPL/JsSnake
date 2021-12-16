@@ -9,11 +9,16 @@ class Grid {
     applePosX = 0;
     applePosY = 0;
 
+    cellSize;
+
     canvas;
     ctx;
 
     // Initialize Canvas and construct Grid.obj
-    constructor(id, size) {
+    constructor(id, cellSize, gridSize) {
+        let size = cellSize * gridSize;
+
+        this.cellSize = cellSize;
         this.canvas = document.getElementById(id);
         this.ctx = this.canvas.getContext("2d");
         this.ctx.beginPath();
@@ -26,7 +31,7 @@ class Grid {
     setObjAt(color, cellX, cellY){
         this.ctx.beginPath();
         this.ctx.fillStyle = color;
-        this.ctx.arc(cellX*cellSize+(cellSize/2), cellY*cellSize+(cellSize/2), cellSize/2, 0, 2 * Math.PI, false);
+        this.ctx.arc(cellX*this.cellSize+(cellSize/2), cellY*this.cellSize+(this.cellSize/2), this.cellSize/2, 0, 2 * Math.PI, false);
         this.ctx.fill();
     }
 
@@ -34,15 +39,15 @@ class Grid {
     removeObjAt(cellX, cellY){
         this.ctx.beginPath();
         this.ctx.fillStyle = "black";
-        this.ctx.rect(cellX*cellSize, cellY*cellSize, cellSize, cellSize);
+        this.ctx.rect(cellX*this.cellSize, cellY*this.cellSize, this.cellSize, this.cellSize);
         this.ctx.fill();
     }
 
     // Handle player input
     createEventHandler(){
         window.addEventListener("keydown",evt => {
-            if (Direction.getOpposite(evt.code) !== grid.previousKey)
-                grid.previousKey = evt.code;
+            if (Direction.getOpposite(evt.code) !== this.previousKey)
+                this.previousKey = evt.code;
         });
     }
 
