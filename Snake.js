@@ -22,13 +22,13 @@ class Snake{
         if (this.currentPosX >= gridSize){
             this.kill();
         }
-        if (this.currentPosX <= 0){
+        if (this.currentPosX < 0){
             this.kill();
         }
         if (this.currentPosY >= gridSize){
             this.kill();
         }
-        if (this.currentPosY <= 0){
+        if (this.currentPosY < 0){
             this.kill();
         }
 
