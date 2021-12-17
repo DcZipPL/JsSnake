@@ -56,4 +56,13 @@ class Grid {
         this.applePosY = Random(0,20);
         this.setObjAt("yellow",this.applePosX,this.applePosY);
     }
+
+    clear(){
+        for (let i = 0; i <= 20; i++) {
+            for (let j = 0; j <= 20; j++) {
+                this.removeObjAt(i,j);
+                this.previousKey = "unknown";
+            }
+        }
+    }
 }

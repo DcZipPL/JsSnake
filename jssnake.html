@@ -12,18 +12,24 @@
 </head><body>
 <section>
     <canvas id="c" width="200" height="200"></canvas>
-    <p style="display: none;" id="goText">You died</p>
+    <p id="goText" class="alive">You died</p>
+    <button id="goBtn" class="alive">Reset</button>
 </section>
 <script>
     const gridSize = 20;
     const cellSize = 10;
     const speed = 50;
-    const length = 6;
+    const length = 2;
 
     let grid = new Grid("c", cellSize, gridSize);
     let snake = new Snake(length);
     grid.createEventHandler();
     grid.spawnApple();
+
+    document.getElementById("goBtn").onclick = (ev => {
+       grid.clear();
+       snake.respawn();
+    });
 
     setInterval(function() {
         snake.tick(grid);

@@ -5,10 +5,12 @@ class Snake{
     // previousPos[dim][pos]
     previousPos = [[],[]];
 
+    baseLength;
     length;
     alive;
 
     constructor(length) {
+        this.baseLength = length;
         this.length = length;
         this.alive = true;
     }
@@ -46,7 +48,8 @@ class Snake{
 
     kill(){
         this.alive = false;
-        document.getElementById("goText").style="";
+        document.getElementById("goText").className = "";
+        document.getElementById("goBtn").className = "";
     }
 
     tick(grid) {
@@ -87,5 +90,17 @@ class Snake{
 
         // Update apple circle when player is already in apple
         grid.setObjAt("yellow",grid.applePosX,grid.applePosY);
+    }
+
+    respawn() {
+        this.alive = true;
+        this.currentPosX = 10;
+        this.currentPosY = 10;
+        this.previousPos[X] = [];
+        this.previousPos[Y] = [];
+        this.length = this.baseLength;
+
+        document.getElementById("goText").className = "alive";
+        document.getElementById("goBtn").className = "alive";
     }
 }

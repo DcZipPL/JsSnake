@@ -1,13 +1,22 @@
 *{margin: 0}
 body section{
     border: red 1px dashed;
+    font-family: "Segoe UI", serif;
 }
-body section input{
-    border: red 1px dotted;
-    background: #0000;
-    color: #0000;
+
+#goText{
+    color: white;
     position: absolute;
-    left: 0;
-    height: 200px;
-    width: 200px;
+    left: calc(100px - 30px);
+    top: calc(100px - 25px);
+}
+
+#goBtn{
+    position: absolute;
+    left: calc(100px - 20px);
+    top: 100px;
+}
+
+.alive{
+    display: none;
 }
