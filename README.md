@@ -21,6 +21,10 @@ Basic setup:
 ```
 Example html:
 ```html
+    <script src="js/Direction.js"></script>
+    <script src="js/Grid.js"></script>
+    <script src="js/Snake.js"></script>
+</head>...<body>
     <canvas id="<canvas_id>" width="200" height="200"></canvas>
     <section>
         <p id="goText">You died</p>
