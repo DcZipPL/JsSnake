@@ -7,14 +7,14 @@ class Snake{
     // previousPos[dim][pos]
     previousPos = [[],[]];
 
-    baseLength;
+    #alive;
+    #baseLength;
     length;
-    alive;
 
     constructor(length) {
-        this.baseLength = length;
+        this.#baseLength = length;
         this.length = length;
-        this.alive = true;
+        this.#alive = true;
     }
 
     savePosition() {
@@ -22,7 +22,7 @@ class Snake{
         this.previousPos[Y].unshift(this.currentPosY);
     }
 
-    checkCollision(grid) {
+    #checkCollision(grid) {
         if (this.currentPosX >= gridSize){
             this.kill();
         }
@@ -50,7 +50,7 @@ class Snake{
     }
 
     kill(){
-        this.alive = false;
+        this.#alive = false;
         document.getElementById("pointsText").innerHTML = "";
         document.getElementById("goText").innerHTML = "Game over. Points: "+this.points;
         document.getElementById("goText").className = "";
@@ -58,7 +58,7 @@ class Snake{
     }
 
     tick(grid) {
-        if (this.alive){
+        if (this.isAlive()){
             document.getElementById("pointsText").innerHTML = "" + ++this.points;
 
             // Splice the array to keep it short
@@ -90,7 +90,7 @@ class Snake{
             }
 
             // Kill snake if it touches himself
-            this.checkCollision(grid);
+            this.#checkCollision(grid);
         }else{
             // Nice slow fading effect when player dies
             grid.fade();
@@ -112,11 +112,15 @@ class Snake{
 
         this.points = 0;
 
-        this.alive = true;
+        this.#alive = true;
         this.currentPosX = 10;
         this.currentPosY = 10;
         this.previousPos[X] = [];
         this.previousPos[Y] = [];
-        this.length = this.baseLength;
+        this.length = this.#baseLength;
+    }
+
+    isAlive(){
+        return this.#alive;
     }
 }

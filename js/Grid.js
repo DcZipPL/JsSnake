@@ -9,38 +9,38 @@ class Grid {
     applePosX = 0;
     applePosY = 0;
 
-    cellSize;
+    #cellSize;
 
-    canvas;
-    ctx;
+    #canvas;
+    #ctx;
 
     // Initialize Canvas and construct Grid.obj
     constructor(id, cellSize, gridSize) {
         let size = cellSize * gridSize;
 
-        this.cellSize = cellSize;
-        this.canvas = document.getElementById(id);
-        this.ctx = this.canvas.getContext("2d");
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "black";
-        this.ctx.rect(0, 0, size, size);
-        this.ctx.fill();
+        this.#cellSize = cellSize;
+        this.#canvas = document.getElementById(id);
+        this.#ctx = this.#canvas.getContext("2d");
+        this.#ctx.beginPath();
+        this.#ctx.fillStyle = "black";
+        this.#ctx.rect(0, 0, size, size);
+        this.#ctx.fill();
     }
 
     // Draw circle object on cell
     setObjAt(color, cellX, cellY){
-        this.ctx.beginPath();
-        this.ctx.fillStyle = color;
-        this.ctx.arc(cellX*this.cellSize+(cellSize/2), cellY*this.cellSize+(this.cellSize/2), this.cellSize/2, 0, 2 * Math.PI, false);
-        this.ctx.fill();
+        this.#ctx.beginPath();
+        this.#ctx.fillStyle = color;
+        this.#ctx.arc(cellX*this.#cellSize+(this.#cellSize/2), cellY*this.#cellSize+(this.#cellSize/2), this.#cellSize/2, 0, 2 * Math.PI, false);
+        this.#ctx.fill();
     }
 
     // Draw black rectangle on top of cell to clear it
     removeObjAt(cellX, cellY){
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "black";
-        this.ctx.rect(cellX*this.cellSize, cellY*this.cellSize, this.cellSize, this.cellSize);
-        this.ctx.fill();
+        this.#ctx.beginPath();
+        this.#ctx.fillStyle = "black";
+        this.#ctx.rect(cellX*this.#cellSize, cellY*this.#cellSize, this.#cellSize, this.#cellSize);
+        this.#ctx.fill();
     }
 
     // Handle player input
