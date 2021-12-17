@@ -1,4 +1,6 @@
 class Snake{
+    points = 0;
+
     currentPosX = 10;
     currentPosY = 10;
 
@@ -41,6 +43,7 @@ class Snake{
         }
 
         if (this.currentPosX === grid.applePosX && this.currentPosY === grid.applePosY){
+            this.points += 100;
             grid.spawnApple();
             this.length++;
         }
@@ -48,41 +51,50 @@ class Snake{
 
     kill(){
         this.alive = false;
+        document.getElementById("pointsText").innerHTML = "";
+        document.getElementById("goText").innerHTML = "Game over. Points: "+this.points;
         document.getElementById("goText").className = "";
         document.getElementById("goBtn").className = "";
     }
 
     tick(grid) {
-        // Splice the array to keep it short
-        if (this.previousPos[X].length + this.previousPos[Y].length > this.length + this.length){
-            this.previousPos[X].splice(-1);
-            this.previousPos[Y].splice(-1);
-        }
+        if (this.alive){
+            document.getElementById("pointsText").innerHTML = "" + ++this.points;
 
-        // Interact with user input
-        if (grid.previousKey===Direction.UP && this.alive){
-            this.savePosition();
-            grid.setObjAt("lime", this.currentPosX,this.currentPosY--);
-            grid.setObjAt("red", this.currentPosX,this.currentPosY);
-        }
-        else if (grid.previousKey===Direction.LEFT && this.alive){
-            this.savePosition();
-            grid.setObjAt("lime", this.currentPosX--,this.currentPosY);
-            grid.setObjAt("red", this.currentPosX,this.currentPosY);
-        }
-        else if (grid.previousKey===Direction.RIGHT && this.alive){
-            this.savePosition();
-            grid.setObjAt("lime", this.currentPosX++,this.currentPosY);
-            grid.setObjAt("red", this.currentPosX,this.currentPosY);
-        }
-        else if (grid.previousKey===Direction.DOWN && this.alive){
-            this.savePosition();
-            grid.setObjAt("lime", this.currentPosX,this.currentPosY++);
-            grid.setObjAt("red", this.currentPosX,this.currentPosY);
-        }
+            // Splice the array to keep it short
+            if (this.previousPos[X].length + this.previousPos[Y].length > this.length + this.length){
+                this.previousPos[X].splice(-1);
+                this.previousPos[Y].splice(-1);
+            }
 
-        // Kill snake if it touches himself
-        this.checkCollision(grid);
+            // Interact with user input
+            if (grid.previousKey===Direction.UP){
+                this.savePosition();
+                grid.setObjAt("lime", this.currentPosX,this.currentPosY--);
+                grid.setObjAt("red", this.currentPosX,this.currentPosY);
+            }
+            else if (grid.previousKey===Direction.LEFT){
+                this.savePosition();
+                grid.setObjAt("lime", this.currentPosX--,this.currentPosY);
+                grid.setObjAt("red", this.currentPosX,this.currentPosY);
+            }
+            else if (grid.previousKey===Direction.RIGHT){
+                this.savePosition();
+                grid.setObjAt("lime", this.currentPosX++,this.currentPosY);
+                grid.setObjAt("red", this.currentPosX,this.currentPosY);
+            }
+            else if (grid.previousKey===Direction.DOWN){
+                this.savePosition();
+                grid.setObjAt("lime", this.currentPosX,this.currentPosY++);
+                grid.setObjAt("red", this.currentPosX,this.currentPosY);
+            }
+
+            // Kill snake if it touches himself
+            this.checkCollision(grid);
+        }else{
+            // Nice slow fading effect when player dies
+            grid.fade();
+        }
 
         // Clear areas that ware this is no more
         grid.removeObjAt(this.previousPos[X][this.length],this.previousPos[Y][this.length]);
@@ -93,14 +105,18 @@ class Snake{
     }
 
     respawn() {
+        document.getElementById("pointsText").innerHTML = "";
+        document.getElementById("goText").innerHTML = "Game over. Points: "+this.points;
+        document.getElementById("goText").className = "alive";
+        document.getElementById("goBtn").className = "alive";
+
+        this.points = 0;
+
         this.alive = true;
         this.currentPosX = 10;
         this.currentPosY = 10;
         this.previousPos[X] = [];
         this.previousPos[Y] = [];
         this.length = this.baseLength;
-
-        document.getElementById("goText").className = "alive";
-        document.getElementById("goBtn").className = "alive";
     }
 }
