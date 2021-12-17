@@ -29,7 +29,7 @@
     grid.createEventHandler();
     grid.spawnApple();
 
-    document.getElementById("goBtn").onclick = (ev => {
+    document.getElementById("goBtn").onclick = (ignore => {
        grid.clear();
        snake.respawn();
     });
